@@ -15,12 +15,11 @@
 class Robot: public SampleRobot
 {
 	Mouse micky;
-
+	int counterX = 0, counterY = 0;
 public:
 	Robot() :
 			micky()
-	{
-	}
+	{}
 
 	/**
 	 * Drive left & right motors for 2 seconds then stop
@@ -36,12 +35,19 @@ public:
 	{
 		while (IsOperatorControl() && IsEnabled())
 		{
-			SmartDashboard::PutNumber("UID", getuid());
 			if (micky.Update() == -1) {
+				counterY=0;
+				counterX=0;
+				SmartDashboard::PutNumber("CM X Value", -1);
+				SmartDashboard::PutNumber("CM Y Value", -1);
 				SmartDashboard::PutNumber("X Value", -1);
 				SmartDashboard::PutNumber("Y Value", -1);
 			}
 			else {
+				counterY+=micky.GetY();
+				counterX+=micky.GetX();
+				SmartDashboard::PutNumber("CM X Value", counterX/800); //1200 ~ 1CM
+				SmartDashboard::PutNumber("CM Y Value", counterY/2000);//20000 ~ 1CM
 				SmartDashboard::PutNumber("X Value", micky.GetX());
 				SmartDashboard::PutNumber("Y Value", micky.GetY());
 			}
