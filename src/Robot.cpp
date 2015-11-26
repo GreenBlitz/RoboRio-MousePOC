@@ -35,6 +35,7 @@ public:
 	{
 		while (IsOperatorControl() && IsEnabled())
 		{
+			SmartDashboard::PutNumber("UID", getuid());
 			if (micky.Update() == -1) {
 				counterY=0;
 				counterX=0;
